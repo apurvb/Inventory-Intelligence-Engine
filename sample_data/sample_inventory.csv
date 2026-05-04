@@ -1,0 +1,6 @@
+sku_id,location,current_stock,avg_daily_demand,demand_std_dev,lead_time_days,lead_time_std_dev,unit_cost
+SKU-001,Warehouse-A,5000,20,5,7,1,25.00
+SKU-002,Warehouse-A,50,30,8,7,1,15.00
+SKU-003,Warehouse-B,200,25,6,5,1,40.00
+SKU-004,Warehouse-B,10,40,10,7,2,10.00
+SKU-005,Warehouse-A,800,15,4,10,2,60.00
