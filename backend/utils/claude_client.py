@@ -1,7 +1,8 @@
 import os
 from anthropic import Anthropic
 
-client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+api_key = os.environ.get("ANTHROPIC_API_KEY") or "sk-ant-api03-714d6_MGsYmYDHLuif7S0m8d9GC3ePbUr1TDFtMvQK4YWsoUTcGeJc_CsPRmhiJXTTnWkJK0GphMEiVeUEagqg-ykmXBAA"
+client = Anthropic(api_key=api_key)
 MODEL = "claude-sonnet-4-5"
 
 def call_claude(system_prompt: str, user_message: str, max_tokens: int = 1500) -> str:
