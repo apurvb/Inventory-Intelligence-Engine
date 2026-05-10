@@ -1,10 +1,7 @@
 import os
 from anthropic import Anthropic
-from dotenv import load_dotenv
 
-load_dotenv()
-
-client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 MODEL = "claude-sonnet-4-5"
 
 def call_claude(system_prompt: str, user_message: str, max_tokens: int = 1500) -> str:
