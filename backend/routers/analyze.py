@@ -3,16 +3,20 @@ from engine.inventory_calculator import SKUMetrics, run_calculations
 from engine.imbalance_detector import detect_imbalances, get_summary
 from engine.financial_simulator import simulate_financial_impact
 from utils.claude_client import diagnose_inventory, generate_recommendations, generate_report
-from models.schemas import AnalysisResponse
+from models.schemas import AnalysisResponse, SKUResult, FinancialSummary, InventorySummary
 from routers.upload import get_session
-import uuid
 import json
 
 router = APIRouter()
 
 @router.post("/analyze/{session_id}", response_model=AnalysisResponse)
 async def analyze_inventory(session_id: str):
-    raw_data = get_session(session_id)
+    try:
+        raw_data = get_session(session_id)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=404, detail=f"Session not found: {str(e)}")
 
     sku_metrics_list = []
     for row in raw_data:
@@ -50,7 +54,6 @@ async def analyze_inventory(session_id: str):
 
     report = generate_report(summary, financial, diagnosis, str(recommendations))
 
-    from models.schemas import SKUResult, FinancialSummary, InventorySummary
     return AnalysisResponse(
         session_id=session_id,
         summary=InventorySummary(**summary),
